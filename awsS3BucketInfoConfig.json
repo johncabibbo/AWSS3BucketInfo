@@ -1,0 +1,39 @@
+{
+    "_metadata": {
+        "project": "awsS3BucketInfo",
+        "version": "1.0",
+        "lastUpdated": "2026-07-04",
+        "description": "SAMPLE configuration for the S3 bucket size logging script. Copy this file, then replace every placeholder value below with your own before running."
+    },
+
+    "database": {
+        "host":     "YOUR_DB_HOST_OR_IP",
+        "port":     3306,
+        "name":     "YOUR_DATABASE_NAME",
+        "username": "YOUR_DB_USERNAME",
+        "password": "YOUR_DB_PASSWORD"
+    },
+
+    "aws": {
+        "profile": "",
+        "region":  "us-east-1"
+    },
+
+    "docInfoApi": {
+        "url":          "https://your-docinfo-host.example.com",
+        "sharedSecret": "YOUR_SHARED_SECRET",
+        "serverJobId":  0
+    },
+
+    "logging": {
+        "logFile": "~/Documents/log/awsS3BucketInfo.log",
+        "printToConsole": true
+    },
+
+    "_sql_reference": {
+        "_note": "Run these once to create the required tables",
+        "S3Bucket": "CREATE TABLE S3Bucket (s3BucketId INT AUTO_INCREMENT PRIMARY KEY, bucketName VARCHAR(255) NOT NULL UNIQUE, createdDate DATETIME DEFAULT CURRENT_TIMESTAMP, lastModifiedDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);",
+        "S3BucketBatch": "CREATE TABLE S3BucketBatch (s3BucketBatchId INT AUTO_INCREMENT PRIMARY KEY, execStartDate DATETIME DEFAULT CURRENT_TIMESTAMP, execEndDate DATETIME NULL, bucketCount INT NULL, totalSizeBytes BIGINT NULL, status VARCHAR(50) DEFAULT 'running', notes TEXT NULL, createdDate DATETIME DEFAULT CURRENT_TIMESTAMP);",
+        "S3BucketLog": "CREATE TABLE S3BucketLog (s3BucketLogId BIGINT AUTO_INCREMENT PRIMARY KEY, s3BucketBatchId INT NOT NULL, s3BucketId INT NOT NULL, sizeBytes BIGINT DEFAULT 0, objectCount BIGINT DEFAULT 0, logDate DATETIME DEFAULT CURRENT_TIMESTAMP);"
+    }
+}
